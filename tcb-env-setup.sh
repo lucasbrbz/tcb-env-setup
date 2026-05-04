@@ -198,8 +198,7 @@ fi
 remote_tags=$(curl -L -s 'https://registry.hub.docker.com/v2/namespaces/torizon/repositories/torizoncore-builder/tags' | sed -n -e 's/\("name"\) *: *\("[^"]\+"\)/\n\1:\2\n/gp' | \
               sed -n -e 's/"name":"\([^"]\+\)"/\1/p')
 # Get list of image tags locally
-# TODO RegEx Fails on MacOS. This one works: sed -En 's/^.*torizoncore-builder[[:space:]]+([0-9]+).*$/\1/p'
-local_tags=$(docker images torizon/torizoncore-builder | sed -n 's/^.*torizoncore-builder\s\+\([0-9]\+\).*$/\1/p')
+local_tags=$(docker images torizon/torizoncore-builder --format '{{.Tag}}')
 
 # Determine the tag with the greatest numerical major revision
 get_latest_tag () {
